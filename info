@@ -1,0 +1,145 @@
+{
+  "uuid": "c74abba1c1656c90337d8b7dbd963969",
+  "path": "Offline/Max_VoltStapen_V2.0",
+  "name": "Max_VoltStapen_V2.0",
+  "content": "Second version of line follower project ",
+  "created_at": "2024-01-06 19:21:53",
+  "updated_at": "2024-01-07 15:01:26",
+  "stick": "",
+  "documents": [
+    {
+      "uuid": "d23b672756d18c7c796f92e126eaaf46",
+      "title": "Sheet_1",
+      "description": "",
+      "docType": "1",
+      "master": "",
+      "thumb": "/images/thumb-default.png",
+      "components": {
+        "ab4623a40bee49ceb990a0b7c883b1b0": 2,
+        "0b6ea66f1a77ef3069b26dadb3d73791": 2,
+        "bda3f14c1102dd7a18e95477d54601fe": 2,
+        "bacf5553da266925c44144ce5fdc0a97": 2,
+        "656bea0e5a1d4f27b40f3468a1fc4847": 1,
+        "2eb23c43f9604c0b9f6d9c533cd9582a": 1
+      },
+      "BOM": [
+        [
+          "Value",
+          "Quantity",
+          "Package",
+          "Components",
+          "CustomPara"
+        ],
+        [
+          "Header-Female-2.54_1x2",
+          2,
+          "HDR-TH_2P-P2.54-V-F",
+          "P1,P2",
+          {
+            "Supplier": "LCSC",
+            "Manufacturer": "BOOMELE(博穆精密)",
+            "Manufacturer Part": "2.54-1*2P母",
+            "Supplier Part": "C49661",
+            "JLCPCB Part Class": "Extended Part",
+            "spiceSymbolName": "Header-Female-2.54_1x2",
+            "puuid": "73b13f40a1a24714ba033b6443e6b3a7",
+            "uuid": "0b6ea66f1a77ef3069b26dadb3d73791"
+          }
+        ],
+        [
+          "Header-Female-2.54_1x20",
+          2,
+          "HDR-TH_20P-P2.54-V-F",
+          "P3,P4",
+          {
+            "Supplier": "LCSC",
+            "Manufacturer": "BOOMELE(博穆精密)",
+            "Manufacturer Part": "2.54-1*20P母",
+            "Supplier Part": "C50984",
+            "JLCPCB Part Class": "Extended Part",
+            "spiceSymbolName": "Header-Female-2.54_1x20",
+            "puuid": "056e53c5990646b8a54edd935246880c",
+            "uuid": "bda3f14c1102dd7a18e95477d54601fe"
+          }
+        ],
+        [
+          "Header-Female-2.54_1x8",
+          2,
+          "HDR-TH_8P-P2.54-V-F-1",
+          "P5,P6",
+          {
+            "Supplier": "LCSC",
+            "Manufacturer": "BOOMELE(博穆精密)",
+            "Manufacturer Part": "2.54-1*8P母环保",
+            "Supplier Part": "C27438",
+            "JLCPCB Part Class": "Extended Part",
+            "spiceSymbolName": "Header-Female-2.54_1x8",
+            "puuid": "366e1b46b2ba4833900571d9613df11d",
+            "uuid": "bacf5553da266925c44144ce5fdc0a97"
+          }
+        ],
+        [
+          "FFC 20pin connector",
+          1,
+          "FFC 20PIN CONNECTOR",
+          "U1",
+          {
+            "Manufacturer": "ADAM TECH",
+            "Manufacturer Part": "PCA-6G-20-HL-3",
+            "Supplier": "tme.eu",
+            "Supplier Part": "PCA-6G-20-HL-3",
+            "link": "https://www.tme.eu/pl/details/pca-6g-20-hl-3/zlacza-ffc-fpc-raster-0-5mm/adam-tech/?brutto=1&currency=PLN&gad_source=1",
+            "Contributor": "simsallagrim",
+            "spiceSymbolName": "FFC 20pin connector",
+            "puuid": "716bf3cc3222499c9658db23fcfbed50",
+            "uuid": "656bea0e5a1d4f27b40f3468a1fc4847"
+          }
+        ],
+        [
+          "S2B-PH-K-S(LF)(SN)",
+          1,
+          "CONN-TH_S2B-PH-K-S-LF-SN",
+          "U2",
+          {
+            "Contributor": "LCSC",
+            "Supplier": "LCSC",
+            "Supplier Part": "C173752",
+            "Manufacturer": "JST",
+            "Manufacturer Part": "S2B-PH-K-S(LF)(SN)",
+            "JLCPCB Part Class": "Extended Part",
+            "spiceSymbolName": "S2B-PH-K-S(LF)(SN)",
+            "puuid": "e28e7df1e91043b2b01b5f07136d18b1",
+            "uuid": "2eb23c43f9604c0b9f6d9c533cd9582a"
+          }
+        ],
+        [
+          "1x6 Goldpin holes",
+          2,
+          "1X6 GOLDPIN HOLES",
+          "U5,U6",
+          {
+            "Manufacturer": "",
+            "Manufacturer Part": "",
+            "Supplier": "Botland",
+            "Supplier Part": "",
+            "link": "",
+            "Contributor": "simsallagrim",
+            "spiceSymbolName": "1x6 Goldpin holes",
+            "puuid": "1f83af6f4ab346b4a5ed2bce9037c422",
+            "uuid": "ab4623a40bee49ceb990a0b7c883b1b0"
+          }
+        ]
+      ],
+      "updateTime": 1704636086,
+      "createTime": 1704572018,
+      "histories": [],
+      "created_at": "2024-01-06 21:13:38",
+      "updated_at": "2024-01-07 15:01:26"
+    }
+  ],
+  "sort": [],
+  "title": "Max_VoltStapen_V2.0",
+  "foldername": "Max_VoltStapen_V2.0",
+  "schfilename": "Max_VoltStapen_V2.0.json",
+  "schfilemtime": 1704636086299
+}
