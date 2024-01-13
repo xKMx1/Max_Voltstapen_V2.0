@@ -4,7 +4,7 @@
   "name": "Max_VoltStapen_V2.0",
   "content": "Second version of line follower project ",
   "created_at": "2024-01-06 19:21:53",
-  "updated_at": "2024-01-12 22:43:35",
+  "updated_at": "2024-01-13 22:03:32",
   "stick": "",
   "documents": [
     {
@@ -22,10 +22,15 @@
         "656bea0e5a1d4f27b40f3468a1fc4847": 1,
         "2eb23c43f9604c0b9f6d9c533cd9582a": 1,
         "3b940f62f3be42bf8d69340dfc301722": 1,
-        "5eb94f57490343ed84777c61897a5d4a": 2,
-        "f0a5b26e9ae54e6ca1f1e950065eeec3": 1,
-        "07175d4eff704e65b3e003b61ec2a948": 1,
-        "fef57b578d05428b8cca7652179f66eb": 1
+        "eb2e11adfa17479aae538499f5996479": 1,
+        "9bfceba5e785404aa098ba348a2d13b8": 1,
+        "c9542327869544a4b7dfaef5d37212aa": 1,
+        "d8e661936ced48ba996812a6b8c4be31": 1,
+        "4479a24208b54d81adb146224ac819d3": 1,
+        "041bdcf9c93c3aea0150fa407f8a7fa7": 1,
+        "a65dd0479670414a95ea3e29de0be4a3": 1,
+        "b55eee3f511c2c92c9b34394656ae9e1": 1,
+        "ccbcc28c788e211f4c459153861ea19d": 1
       },
       "BOM": [
         [
@@ -36,37 +41,135 @@
           "CustomPara"
         ],
         [
-          "1u",
-          2,
-          "C0603",
-          "C1,C3",
+          "68uF",
+          1,
+          "CAP-TH_BD1.2-P5.00-D13.0-FD",
+          "C1",
           {
-            "Contributor": "LCSC",
+            "Supplier Part": "C47894",
             "Supplier": "LCSC",
-            "Supplier Part": "C272771",
-            "Manufacturer": "VISHAY(威世)",
-            "Manufacturer Part": "VJ0603G105KXJCW1BC",
+            "Manufacturer": "ValuePro",
+            "Manufacturer Part": "68uF 200V 13*25",
             "JLCPCB Part Class": "Extended Part",
-            "spiceSymbolName": "VJ0603G105KXJCW1BC",
-            "puuid": "f8151fdc728a41ebbc304e11d39e5437",
-            "uuid": "5eb94f57490343ed84777c61897a5d4a"
+            "spiceSymbolName": "68uF 200V 13*25",
+            "puuid": "c38926eb45cd4418bc040fe14d71b09b",
+            "uuid": "b55eee3f511c2c92c9b34394656ae9e1"
           }
         ],
         [
-          "22n",
+          "47nF",
           1,
           "C0603",
           "C2",
           {
             "Contributor": "LCSC",
             "Supplier": "LCSC",
-            "Supplier Part": "C9900010083",
-            "Manufacturer": "null",
-            "Manufacturer Part": "贴片cap,2.2uF,+/-10%,25V,X5R",
+            "Supplier Part": "C123511",
+            "Manufacturer": "Walsin(华新科)",
+            "Manufacturer Part": "0603B473K160CT",
             "JLCPCB Part Class": "Extended Part",
-            "spiceSymbolName": "贴片CAP,2.2UF,+/-10%,25V,X5R",
+            "spiceSymbolName": "0603B473K160",
             "puuid": "f8151fdc728a41ebbc304e11d39e5437",
-            "uuid": "07175d4eff704e65b3e003b61ec2a948"
+            "uuid": "c9542327869544a4b7dfaef5d37212aa"
+          }
+        ],
+        [
+          "330pF",
+          1,
+          "C0603",
+          "C3",
+          {
+            "Supplier": "LCSC",
+            "Manufacturer": "YAGEO(国巨)",
+            "Manufacturer Part": "CC0603KRX7R9BB331",
+            "Supplier Part": "C107087",
+            "JLCPCB Part Class": "Extended Part",
+            "spiceSymbolName": "CC0603KRX7R9BB331",
+            "puuid": "f8151fdc728a41ebbc304e11d39e5437",
+            "uuid": "d8e661936ced48ba996812a6b8c4be31"
+          }
+        ],
+        [
+          "100uF",
+          1,
+          "CAP-SMD_BD6.3-L6.5-W6.5-LS7.2-FD",
+          "C4",
+          {
+            "Contributor": "lcsc",
+            "Supplier": "LCSC",
+            "Supplier Part": "C2982822",
+            "Manufacturer": "KNSCHA(科尼盛)",
+            "Manufacturer Part": "KNM2100UF35V149EC0055",
+            "JLCPCB Part Class": "Extended Part",
+            "spiceSymbolName": "KNM2100UF35V149EC0055",
+            "puuid": "faee7fcb0dae4ab9a6a44840c0d9d753",
+            "uuid": "4479a24208b54d81adb146224ac819d3"
+          }
+        ],
+        [
+          "1uF",
+          1,
+          "C0603",
+          "C5",
+          {
+            "Supplier": "LCSC",
+            "Manufacturer": "FH(风华)",
+            "Manufacturer Part": "0603F105M250NT",
+            "Supplier Part": "C36577",
+            "JLCPCB Part Class": "Extended Part",
+            "spiceSymbolName": "0603F105M250NT",
+            "puuid": "f8151fdc728a41ebbc304e11d39e5437",
+            "uuid": "041bdcf9c93c3aea0150fa407f8a7fa7"
+          }
+        ],
+        [
+          "1nF",
+          1,
+          "C0603",
+          "C6",
+          {
+            "Contributor": "LCSC",
+            "Supplier": "LCSC",
+            "Supplier Part": "C519403",
+            "Manufacturer": "YAGEO(国巨)",
+            "Manufacturer Part": "CC0603KRX7R7BB102",
+            "JLCPCB Part Class": "Extended Part",
+            "spiceSymbolName": "CC0603KRX7R7BB102",
+            "puuid": "f8151fdc728a41ebbc304e11d39e5437",
+            "uuid": "a65dd0479670414a95ea3e29de0be4a3"
+          }
+        ],
+        [
+          "1N5817",
+          1,
+          "DO-41_BD2.4-L4.7-P8.70-D0.9-FD",
+          "D1",
+          {
+            "Supplier": "LCSC",
+            "Manufacturer Part": "1N5817",
+            "Manufacturer": "MDD",
+            "Supplier Part": "C3062",
+            "JLCPCB Part Class": "Extended Part",
+            "spiceSymbolName": "1N5817",
+            "puuid": "f9b6c4acbda64b569861a21e133c291c",
+            "uuid": "ccbcc28c788e211f4c459153861ea19d"
+          }
+        ],
+        [
+          "22uH",
+          1,
+          "L0603",
+          "L1",
+          {
+            "Contributor": "LCSC",
+            "Supplier": "LCSC",
+            "Supplier Part": "C383393",
+            "Manufacturer": "TDK",
+            "Manufacturer Part": "MLZ1608M220WT000",
+            "JLCPCB Part Class": "Extended Part",
+            "spiceSymbolName": "MLZ1608M220WT000",
+            "puuid": "1f261cf72cb1479ca32177c31156ede3",
+            "uuid": "9bfceba5e785404aa098ba348a2d13b8"
           }
         ],
         [
@@ -135,23 +238,6 @@
           }
         ],
         [
-          "100kΩ",
-          1,
-          "R0603",
-          "R2",
-          {
-            "Contributor": "LCSC",
-            "Supplier": "LCSC",
-            "Supplier Part": "C431864",
-            "Manufacturer": "Walsin(华新科)",
-            "Manufacturer Part": "WR06X104JTR",
-            "JLCPCB Part Class": "Extended Part",
-            "spiceSymbolName": "WR06X104JTR",
-            "puuid": "398691f1f785460098bbe5ee6590333c",
-            "uuid": "fef57b578d05428b8cca7652179f66eb"
-          }
-        ],
-        [
           "FFC 20pin connector",
           1,
           "FFC 20PIN CONNECTOR",
@@ -166,23 +252,6 @@
             "spiceSymbolName": "FFC 20pin connector",
             "puuid": "716bf3cc3222499c9658db23fcfbed50",
             "uuid": "656bea0e5a1d4f27b40f3468a1fc4847"
-          }
-        ],
-        [
-          "RT9193-GB33",
-          1,
-          "SOT-23-5_L2.9-W1.6-P0.95-LS2.8-TL",
-          "U1",
-          {
-            "Contributor": "lcsc",
-            "Supplier": "LCSC",
-            "Supplier Part": "C9900013399",
-            "Manufacturer": "null",
-            "Manufacturer Part": "RT9193-GB33",
-            "JLCPCB Part Class": "Extended Part",
-            "spiceSymbolName": "RT9193-GB33",
-            "puuid": "03ef13f318724c0ca9ae900ab4eba29c",
-            "uuid": "f0a5b26e9ae54e6ca1f1e950065eeec3"
           }
         ],
         [
@@ -203,6 +272,23 @@
           }
         ],
         [
+          "MAX748ACPA+",
+          1,
+          "PDIP-8_L9.4-W7.0-P2.54-LS7.6-BL",
+          "U4",
+          {
+            "Contributor": "LCSC",
+            "Supplier": "LCSC",
+            "Supplier Part": "C1356247",
+            "Manufacturer": "ADI(亚德诺)/MAXIM(美信)",
+            "Manufacturer Part": "MAX748ACPA+",
+            "JLCPCB Part Class": "Extended Part",
+            "spiceSymbolName": "MAX748ACPA+",
+            "puuid": "778744e262b346038ae93b76274edc26",
+            "uuid": "eb2e11adfa17479aae538499f5996479"
+          }
+        ],
+        [
           "1x6 Goldpin holes",
           2,
           "1X6 GOLDPIN HOLES",
@@ -220,16 +306,16 @@
           }
         ]
       ],
-      "updateTime": 1705095815,
+      "updateTime": 1705179812,
       "createTime": 1704572018,
       "histories": [],
       "created_at": "2024-01-06 21:13:38",
-      "updated_at": "2024-01-12 22:43:35"
+      "updated_at": "2024-01-13 22:03:32"
     }
   ],
   "sort": [],
   "title": "Max_VoltStapen_V2.0",
   "foldername": "Max_VoltStapen_V2.0",
   "schfilename": "Max_VoltStapen_V2.0.json",
-  "schfilemtime": 1705095818219
+  "schfilemtime": 1705179812480
 }
