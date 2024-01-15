@@ -4,7 +4,7 @@
   "name": "Max_VoltStapen_V2.0",
   "content": "Second version of line follower project ",
   "created_at": "2024-01-06 19:21:53",
-  "updated_at": "2024-01-14 22:32:05",
+  "updated_at": "2024-01-15 12:23:42",
   "stick": "",
   "documents": [
     {
@@ -30,7 +30,8 @@
         "041bdcf9c93c3aea0150fa407f8a7fa7": 1,
         "a65dd0479670414a95ea3e29de0be4a3": 1,
         "b55eee3f511c2c92c9b34394656ae9e1": 1,
-        "ccbcc28c788e211f4c459153861ea19d": 1
+        "ccbcc28c788e211f4c459153861ea19d": 1,
+        "34c60e2e106b4c4b83126f647e22f408": 1
       },
       "BOM": [
         [
@@ -238,6 +239,23 @@
           }
         ],
         [
+          "10kΩ",
+          1,
+          "R0603",
+          "R2",
+          {
+            "Supplier": "LCSC",
+            "Supplier Part": "C3017715",
+            "Manufacturer": "VO(翔胜)",
+            "Manufacturer Part": "SCR0603J10K",
+            "JLCPCB Part Class": "Extended Part",
+            "Contributor": "lcsc",
+            "spiceSymbolName": "SCR0603J10K",
+            "puuid": "398691f1f785460098bbe5ee6590333c",
+            "uuid": "34c60e2e106b4c4b83126f647e22f408"
+          }
+        ],
+        [
           "FFC 20pin connector",
           1,
           "FFC 20PIN CONNECTOR",
@@ -306,16 +324,16 @@
           }
         ]
       ],
-      "updateTime": 1705267925,
+      "updateTime": 1705317822,
       "createTime": 1704572018,
       "histories": [],
       "created_at": "2024-01-06 21:13:38",
-      "updated_at": "2024-01-14 22:32:05"
+      "updated_at": "2024-01-15 12:23:42"
     }
   ],
   "sort": [],
   "title": "Max_VoltStapen_V2.0",
   "foldername": "Max_VoltStapen_V2.0",
   "schfilename": "Max_VoltStapen_V2.0.json",
-  "schfilemtime": 1705267925627
+  "schfilemtime": 1705317822375
 }
