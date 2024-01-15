@@ -4,7 +4,7 @@
   "name": "Max_VoltStapen_Main_Board",
   "content": "Second version of line follower project ",
   "created_at": "2024-01-06 19:21:53",
-  "updated_at": "2024-01-15 15:02:22",
+  "updated_at": "2024-01-15 15:08:10",
   "stick": "",
   "documents": [
     {
@@ -355,11 +355,11 @@
         "1f83af6f4ab346b4a5ed2bce9037c422": 2
       },
       "BOM": [],
-      "updateTime": 1705327342,
+      "updateTime": 1705327690,
       "createTime": 1705325674,
       "histories": [],
       "created_at": "2024-01-15 14:34:34",
-      "updated_at": "2024-01-15 15:02:22"
+      "updated_at": "2024-01-15 15:08:10"
     }
   ],
   "sort": [],
