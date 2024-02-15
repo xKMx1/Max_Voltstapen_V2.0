@@ -119,6 +119,10 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=HTBGSQBO
 
+[GeneratedDocument1]
+DocumentPath=Project Outputs for Max_VoltStapen_v2\Design Rule Check - PCB1.html
+DItemRevisionGUID=
+
 [Configuration1]
 Name=Sources
 ParameterCount=0
