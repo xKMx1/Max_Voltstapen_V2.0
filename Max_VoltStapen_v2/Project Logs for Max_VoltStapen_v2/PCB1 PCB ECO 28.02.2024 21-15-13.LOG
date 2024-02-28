@@ -1,0 +1,4 @@
+Removed Pin From Net: NetName=ROUTA Pin=DK1-17
+Removed Pin From Net: NetName=ROUTB Pin=DK1-18
+Added Pin To Net: NetName=ROUTB Pin=DK1-17
+Added Pin To Net: NetName=ROUTA Pin=DK1-18
