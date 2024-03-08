@@ -1,0 +1,12 @@
+Added Pin To Net: NetName=3V3 Pin=*-2
+Added Pin To Net: NetName=AO1 Pin=*-3
+Added Pin To Net: NetName=AO2 Pin=*-4
+Added Pin To Net: NetName=BO2 Pin=*-5
+Added Pin To Net: NetName=BO1 Pin=*-6
+Added Pin To Net: NetName=VCC Pin=*-7
+Added Pin To Net: NetName=PWMA Pin=*-9
+Added Pin To Net: NetName=AIN2 Pin=*-10
+Added Pin To Net: NetName=AIN1 Pin=*-11
+Added Pin To Net: NetName=BIN1 Pin=*-13
+Added Pin To Net: NetName=BIN2 Pin=*-14
+Added Pin To Net: NetName=PWMB Pin=*-15

@@ -1,0 +1,21 @@
+Removed Pin From Net: NetName=VCC Pin=I2-1
+Removed Pin From Net: NetName=REF Pin=I2-2
+Removed Pin From Net: NetName=SS Pin=I2-3
+Removed Pin From Net: NetName=CC Pin=I2-4
+Removed Pin From Net: NetName=3V3 Pin=I2-5
+Removed Pin From Net: NetName=GND Pin=I2-6
+Removed Pin From Net: NetName=VCC Pin=I2-8
+Removed Member From Class: ClassName=Sheet1 Member=I2
+Added Component: Designator=*(MAX748ACPA+ in DIP socket footprint)
+Added Pin To Net: NetName=VCC Pin=*-1
+Added Pin To Net: NetName=REF Pin=*-2
+Added Pin To Net: NetName=SS Pin=*-3
+Added Pin To Net: NetName=CC Pin=*-4
+Added Pin To Net: NetName=3V3 Pin=*-5
+Added Pin To Net: NetName=GND Pin=*-6
+Added Pin To Net: NetName=VCC Pin=*-8
+Added Pin To Net: NetName=Net*_7 Pin=*-7
+Added Pin To Net: NetName=Net*_7 Pin=D1-1
+Added Pin To Net: NetName=Net*_7 Pin=L1-1
+Added Net: Name=Net*_7
+Added Member To Class: ClassName=Sheet1 Member=Component * MAX748ACPA+ in DIP socket
