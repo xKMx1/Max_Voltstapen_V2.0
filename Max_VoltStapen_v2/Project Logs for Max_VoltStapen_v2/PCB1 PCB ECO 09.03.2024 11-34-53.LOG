@@ -1,0 +1,6 @@
+Added Component: Designator=*(TB6612FNG board footprint)
+Added Pin To Net: NetName=GND Pin=*-1
+Added Pin To Net: NetName=GND Pin=*-8
+Added Pin To Net: NetName=STBY Pin=*-12
+Added Pin To Net: NetName=GND Pin=*-16
+Added Member To Class: ClassName=Sheet1 Member=Component * TB6612FNG board
