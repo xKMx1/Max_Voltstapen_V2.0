@@ -1,0 +1,4 @@
+Remove Pin=IC?-1 From Net=OD
+Remove Pin=IC?-2 From Net=OC
+Remove Pin=SW?-1 From Net=VSS
+Change Component Designator: OldDesignator=P1 NewDesignator=P3

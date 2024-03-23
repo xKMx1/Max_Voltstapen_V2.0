@@ -1,0 +1,39 @@
+Add Component: Footprint Not Found WtyczkaNaBaterie
+Added Component: Designator=J1(SOP65P640X120-8N)
+Added Component: Designator=J2(SOP65P640X120-8N)
+Add Pin To Net: Unknown Pin: Pin B_C?-1
+Add Pin To Net: Unknown Pin: Pin B_C?-2
+Add Pin To Net: Unknown Pin: Pin B_C?-3
+Add Pin To Net: Unknown Pin: Pin IC?-1
+Add Pin To Net: Unknown Pin: Pin IC?-2
+Add Pin To Net: Unknown Pin: Pin IC?-3
+Add Pin To Net: Unknown Pin: Pin IC?-4
+Add Pin To Net: Unknown Pin: Pin IC?-5
+Add Pin To Net: Unknown Pin: Pin IC?-6
+Added Pin To Net: NetName=NetJ1_1 Pin=J1-1
+Added Pin To Net: NetName=VSS Pin=J1-2
+Added Pin To Net: NetName=VSS Pin=J1-3
+Added Pin To Net: NetName=OD Pin=J1-4
+Added Pin To Net: NetName=OC Pin=J1-5
+Added Pin To Net: NetName=PB- Pin=J1-6
+Added Pin To Net: NetName=PB- Pin=J1-7
+Added Pin To Net: NetName=NetJ1_1 Pin=J1-8
+Added Pin To Net: NetName=NetJ1_1 Pin=J2-1
+Added Pin To Net: NetName=VSS Pin=J2-2
+Added Pin To Net: NetName=VSS Pin=J2-3
+Added Pin To Net: NetName=OD Pin=J2-4
+Added Pin To Net: NetName=OC Pin=J2-5
+Added Pin To Net: NetName=PB- Pin=J2-6
+Added Pin To Net: NetName=PB- Pin=J2-7
+Added Pin To Net: NetName=NetJ1_1 Pin=J2-8
+Add Class Member: Failed to add class member : Component B_C? Battery_Connector
+Added Member To Class: ClassName=Sheet1 Member=Component C? 100n
+Added Member To Class: ClassName=Sheet1 Member=Component C? 100n
+Added Member To Class: ClassName=Sheet1 Member=Component C? 100n
+Added Member To Class: ClassName=Sheet1 Member=Component C? 47u-10V
+Added Member To Class: ClassName=Sheet1 Member=Component C? 47u-10V
+Add Class Member: Failed to add class member : Component IC? TC2120
+Added Member To Class: ClassName=Sheet1 Member=Component J1 8205A
+Added Member To Class: ClassName=Sheet1 Member=Component J2 8205A
+Added Member To Class: ClassName=Sheet1 Member=Component R? 330R-1%
+Added Member To Class: ClassName=Sheet1 Member=Component R? 330R-1%
