@@ -1,0 +1,34 @@
+Removed Pin From Net: NetName=PB- Pin=P1-1
+Removed Pin From Net: NetName=LOUTB Pin=P1-2
+Removed Pin From Net: NetName=LOUTA Pin=P1-3
+Removed Pin From Net: NetName=3V3 Pin=P1-4
+Removed Pin From Net: NetName=AO2 Pin=P1-5
+Removed Pin From Net: NetName=AO1 Pin=P1-6
+Removed Pin From Net: NetName=PB- Pin=P2-1
+Removed Pin From Net: NetName=ROUTB Pin=P2-2
+Removed Pin From Net: NetName=ROUTA Pin=P2-3
+Removed Pin From Net: NetName=3V3 Pin=P2-4
+Removed Pin From Net: NetName=BO2 Pin=P2-5
+Removed Pin From Net: NetName=BO1 Pin=P2-6
+Removed Member From Class: ClassName=Sheet1 Member=P1
+Removed Member From Class: ClassName=Sheet1 Member=P2
+Added Component: Designator=*(Encoders Pololu footprint)
+Added Component: Designator=*(Encoders Pololu footprint)
+Add Component: Footprint Not Found 1206R
+Added Pin To Net: NetName=PB- Pin=*-1
+Added Pin To Net: NetName=PB- Pin=*-1
+Added Pin To Net: NetName=LOUTB Pin=*-2
+Added Pin To Net: NetName=ROUTB Pin=*-2
+Added Pin To Net: NetName=LOUTA Pin=*-3
+Added Pin To Net: NetName=ROUTA Pin=*-3
+Added Pin To Net: NetName=3V3 Pin=*-4
+Added Pin To Net: NetName=3V3 Pin=*-4
+Added Pin To Net: NetName=AO2 Pin=*-5
+Added Pin To Net: NetName=BO2 Pin=*-5
+Added Pin To Net: NetName=AO1 Pin=*-6
+Added Pin To Net: NetName=BO1 Pin=*-6
+Add Pin To Net: Unknown Pin: Pin R6-1
+Add Pin To Net: Unknown Pin: Pin R6-2
+Added Member To Class: ClassName=Sheet1 Member=Component * Pololu Encoders
+Added Member To Class: ClassName=Sheet1 Member=Component * Pololu Encoders
+Add Class Member: Failed to add class member : Component R6 n.m
