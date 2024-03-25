@@ -1,0 +1,10 @@
+Removed Pin From Net: NetName=LOUTA Pin=DK1-19
+Removed Pin From Net: NetName=LOUTB Pin=DK1-20
+Add Component: Footprint Not Found 1206R
+Added Pin To Net: NetName=LOUTB Pin=DK1-19
+Added Pin To Net: NetName=LOUTA Pin=DK1-20
+Add Pin To Net: Unknown Pin: Pin R6-1
+Add Pin To Net: Unknown Pin: Pin R6-2
+Added Member To Class: ClassName=Sheet1 Member=Component P1 Pololu Encoders
+Added Member To Class: ClassName=Sheet1 Member=Component P2 Pololu Encoders
+Add Class Member: Failed to add class member : Component R6 n.m
