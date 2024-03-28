@@ -1,0 +1,4 @@
+Removed Pin From Net: NetName=SENS8 Pin=P1-5
+Removed Pin From Net: NetName=SENS6 Pin=P1-7
+Added Pin To Net: NetName=SENS6 Pin=P1-5
+Added Pin To Net: NetName=SENS8 Pin=P1-7

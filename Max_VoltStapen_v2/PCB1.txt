@@ -1,0 +1,12 @@
+Board Information Report
+Filename     : D:\Projects\Robotics\MaxVoltstapenV2\Max_VoltStapen_v2\PCB1.PcbDoc
+Date         : 27.03.2024
+Time         : 17:46:10
+Time Elapsed : 00:00:00
+
+Routing Information
+    Routing completion, 100,00%
+    Connections, 85
+    Connections routed, 85
+    Connections remaining, 0
+count : 4
