@@ -1,8 +1,0 @@
-Removed Pin From Net: NetName=PWMB Pin=DK1-29
-Removed Pin From Net: NetName=AIN2 Pin=DK1-35
-Removed Pin From Net: NetName=GND Pin=P3-1
-Removed Pin From Net: NetName=3V3 Pin=P3-2
-Added Pin To Net: NetName=AIN2 Pin=DK1-29
-Added Pin To Net: NetName=PWMB Pin=DK1-35
-Added Pin To Net: NetName=3V3 Pin=P3-1
-Added Pin To Net: NetName=GND Pin=P3-2

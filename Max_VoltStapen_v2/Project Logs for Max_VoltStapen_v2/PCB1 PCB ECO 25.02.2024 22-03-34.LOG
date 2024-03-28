@@ -1,4 +1,0 @@
-Removed Pin From Net: NetName=LOUTB Pin=DK1-19
-Removed Pin From Net: NetName=LOUTA Pin=DK1-20
-Added Pin To Net: NetName=LOUTA Pin=DK1-19
-Added Pin To Net: NetName=LOUTB Pin=DK1-20

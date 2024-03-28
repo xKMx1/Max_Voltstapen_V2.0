@@ -1,9 +1,0 @@
-Added Component: Designator=P1(Encoders Pololu footprint)
-Added Component: Designator=P2(Encoders Pololu footprint)
-Add Component: Footprint Not Found 1206R
-Added Pin To Net: NetName=PB- Pin=P1-1
-Added Pin To Net: NetName=PB- Pin=P2-1
-Add Pin To Net: Unknown Pin: Pin R6-2
-Added Member To Class: ClassName=Sheet1 Member=Component P1 Pololu Encoders
-Added Member To Class: ClassName=Sheet1 Member=Component P2 Pololu Encoders
-Add Class Member: Failed to add class member : Component R6 n.m

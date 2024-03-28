@@ -1,4 +1,0 @@
-Removed Pin From Net: NetName=AIN2 Pin=DK1-6
-Removed Pin From Net: NetName=PWMA Pin=DK1-11
-Added Pin To Net: NetName=PWMA Pin=DK1-6
-Added Pin To Net: NetName=AIN2 Pin=DK1-11

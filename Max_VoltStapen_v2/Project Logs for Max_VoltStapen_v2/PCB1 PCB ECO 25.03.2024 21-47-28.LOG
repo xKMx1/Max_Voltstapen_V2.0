@@ -1,7 +1,0 @@
-Change Component Designator: OldDesignator=* NewDesignator=P1
-Change Component Designator: OldDesignator=* NewDesignator=P2
-Add Component: Footprint Not Found 1206R
-Add Pin To Net: Unknown Pin: Pin R6-1
-Add Pin To Net: Unknown Pin: Pin R6-2
-Added Member To Class: ClassName=Sheet1 Member=Component P1 Pololu Encoders
-Add Class Member: Failed to add class member : Component R6 n.m

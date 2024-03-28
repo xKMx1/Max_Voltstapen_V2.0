@@ -1,8 +1,0 @@
-Removed Pin From Net: NetName=VCC Pin=DK1-15
-Removed Pin From Net: NetName=VIN+ Pin=P4-2
-Removed Pin From Net: NetName=VIN+ Pin=R1-1
-Removed Pin From Net: NetName=VCC Pin=R1-2
-Removed Member From Class: ClassName=Sheet1 Member=R1
-Added Pin To Net: NetName=VCC Pin=P4-2
-Added Pin To Net: NetName=VIN- Pin=DK1-15
-Added Net: Name=VIN-
