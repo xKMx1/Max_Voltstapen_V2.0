@@ -1,0 +1,6 @@
+Removed Pin From Net: NetName=ROUTB Pin=DK1-19
+Removed Pin From Net: NetName=ROUTA Pin=DK1-20
+Added Pin To Net: NetName=ROUTA Pin=DK1-19
+Added Pin To Net: NetName=ROUTB Pin=DK1-20
+Added Member To Class: ClassName=Sheet1 Member=Component P? Pololu Encoders
+Added Member To Class: ClassName=Sheet1 Member=Component P? Pololu Encoders

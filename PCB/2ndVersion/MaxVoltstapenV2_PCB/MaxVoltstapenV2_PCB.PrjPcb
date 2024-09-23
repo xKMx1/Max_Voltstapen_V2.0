@@ -67,23 +67,6 @@ GenerateClassCluster=0
 DocumentUniqueId=HDCUMFWB
 
 [Document2]
-DocumentPath=..\..\..\..\MaxVoltstapenV3\PCB\MaxVoltstapenV3_PCB\PCB1.PcbDoc
-AnnotationEnabled=1
-AnnotateStartValue=1
-AnnotationIndexControlEnabled=0
-AnnotateSuffix=
-AnnotateScope=All
-AnnotateOrder=-1
-DoLibraryUpdate=1
-DoDatabaseUpdate=1
-ClassGenCCAutoEnabled=1
-ClassGenCCAutoRoomEnabled=0
-ClassGenNCAutoScope=None
-DItemRevisionGUID=
-GenerateClassCluster=0
-DocumentUniqueId=QGODOMSO
-
-[Document3]
 DocumentPath=Schlib1.SchLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -100,7 +83,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=RERNURXM
 
-[Document4]
+[Document3]
 DocumentPath=PcbLib1.PcbLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -116,6 +99,23 @@ ClassGenNCAutoScope=None
 DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=RUVOOSLW
+
+[Document4]
+DocumentPath=PCB1.PcbDoc
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=0
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=LWGNGUNH
 
 [Configuration1]
 Name=Sources
