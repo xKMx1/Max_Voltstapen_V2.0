@@ -1,0 +1,6 @@
+Change Component Designator: OldDesignator=IC? NewDesignator=IC1
+Change Component Designator: OldDesignator=P? NewDesignator=P1
+Change Component Designator: OldDesignator=P? NewDesignator=P2
+Change Component Designator: OldDesignator=P? NewDesignator=P3
+Added Member To Class: ClassName=Sheet1 Member=Component P2 Pololu Encoders
+Added Member To Class: ClassName=Sheet1 Member=Component P3 Pololu Encoders
