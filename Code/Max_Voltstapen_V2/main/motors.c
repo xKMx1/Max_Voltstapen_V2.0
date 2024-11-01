@@ -7,31 +7,22 @@
 #define BIN1_PIN     36  
 #define BIN2_PIN     37  
 
-// Definicja częstotliwości PWM
 #define PWM_FREQ     1000 // 1 kHz dla PWM
 
 void init_pwm() {
-    // Konfiguracja PWM dla silnika A
-    mcpwm_gpio_init(MCPWM_UNIT_0, MCPWM0A, PWMA_PIN);
-    mcpwm_config_t pwm_config_A = {
+    mcpwm_config_t pwm_config = {
         .frequency = PWM_FREQ,
         .cmpr_a = 0,       // Początkowy współczynnik wypełnienia 0% dla silnika A
         .cmpr_b = 0,
         .duty_mode = MCPWM_DUTY_MODE_0,
         .counter_mode = MCPWM_UP_COUNTER,
     };
-    mcpwm_init(MCPWM_UNIT_0, MCPWM_TIMER_0, &pwm_config_A);
 
-    // Konfiguracja PWM dla silnika B
+    mcpwm_gpio_init(MCPWM_UNIT_0, MCPWM0A, PWMA_PIN);
+    mcpwm_init(MCPWM_UNIT_0, MCPWM_TIMER_0, &pwm_config);
+
     mcpwm_gpio_init(MCPWM_UNIT_1, MCPWM0A, PWMB_PIN);
-    mcpwm_config_t pwm_config_B = {
-        .frequency = PWM_FREQ,
-        .cmpr_a = 0,       // Początkowy współczynnik wypełnienia 0% dla silnika B
-        .cmpr_b = 0,
-        .duty_mode = MCPWM_DUTY_MODE_0,
-        .counter_mode = MCPWM_UP_COUNTER,
-    };
-    mcpwm_init(MCPWM_UNIT_1, MCPWM_TIMER_0, &pwm_config_B);
+    mcpwm_init(MCPWM_UNIT_1, MCPWM_TIMER_0, &pwm_config);
 }
 
 // Funkcja inicjalizująca piny GPIO

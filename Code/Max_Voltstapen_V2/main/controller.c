@@ -14,6 +14,6 @@ void controller(float line_deviation){
     float duty_left = (2 * default_speed - turning_speed * WHEELBASE) / 2; 
 	float duty_right = 2 * default_speed - duty_left;  
 
-    set_motorA_speed(duty_left);
-    set_motorB_speed(duty_right);
+    // set_motorA_speed(duty_left);
+    // set_motorB_speed(duty_right);
 }

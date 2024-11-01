@@ -16,16 +16,20 @@ const int BIN2 = 37;
 
 void app_main(void)
 {
-    init_gpio();
-    init_pwm();
+    // init_gpio();
+    // init_pwm();
     initADC();
+
+    int randArr[8] = {0};
+
+    for(uint8_t i = 0; i < 100; i++){
+        calibrate(&calibration);
+    }
+
     while(1){
-        set_motorA_direction(true);
-        set_motorB_direction(false);
+        vTaskDelay(750 / portTICK_PERIOD_MS);
+        readSensValue(randArr);
+        readSensValueCalibrated(randArr);
 
-        
-
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
-        read_sens_value();
     }
 }
