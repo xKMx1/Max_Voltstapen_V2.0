@@ -22,14 +22,15 @@ void app_main(void)
 
     int randArr[8] = {0};
 
-    for(uint8_t i = 0; i < 100; i++){
+    for(uint16_t i = 0; i < 2000; i++){
         calibrate(&calibration);
     }
+    printf("done\n\n");
 
     while(1){
         vTaskDelay(750 / portTICK_PERIOD_MS);
-        readSensValue(randArr);
         readSensValueCalibrated(randArr);
 
+        printf("Line: %d ", readLine(randArr));
     }
 }

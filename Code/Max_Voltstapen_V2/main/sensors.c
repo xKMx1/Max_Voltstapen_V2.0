@@ -45,6 +45,11 @@ void initADC(){
 }
 
 uint16_t readLine(uint16_t* sensorValues){
+    for(uint8_t i = 0; i < sensorCount; i++){
+        printf("%d: %d, ", i, sensorValues[i]);
+    }
+    printf("\n");
+
     bool isOnLine = false;
     uint32_t avg = 0;
     uint16_t sum = 0;
@@ -80,14 +85,22 @@ void readSensValue(int* raw_values){   // raw_values is 8 element array
         ESP_ERROR_CHECK(adc_oneshot_read(adc2_handle, adc2_channels[i], &raw_values[NUM_CHANNELS_ADC1 + i]));
     }
 
-    for(int i = 0; i < NUM_CHANNELS_ADC1 + NUM_CHANNELS_ADC2; i++){
-        printf("%d: %d, ", i, raw_values[i]);
-    }
-    printf("NIEZKALIBROWANE\n");
+    // for(int i = 0; i < NUM_CHANNELS_ADC1 + NUM_CHANNELS_ADC2; i++){
+    //     printf("%d: %d, ", i, raw_values[i]);
+    // }
+    // printf("NIEZKALIBROWANE\n");
 }
 
-void readSensValueCalibrated(int* rawValues){
-    uint32_t sensVal[sensorCount] = {};
+void readSensValueCalibrated(int* calibratedValues){
+    int rawValues[sensorCount] = {};
+
+    for (int i = 0; i < NUM_CHANNELS_ADC1; i++) {
+        ESP_ERROR_CHECK(adc_oneshot_read(adc1_handle, adc1_channels[i], &rawValues[i]));
+    }
+
+    for (int i = 0; i < NUM_CHANNELS_ADC2; i++) {
+        ESP_ERROR_CHECK(adc_oneshot_read(adc2_handle, adc2_channels[i], &rawValues[NUM_CHANNELS_ADC1 + i]));
+    }
 
     for(uint8_t i = 0; i < sensorCount; i++){
         uint16_t calMin = calibration.minimum[i];
@@ -103,10 +116,10 @@ void readSensValueCalibrated(int* rawValues){
         if (value < 0) { value = 0; }
         else if (value > 1000) { value = 1000; }
 
-        sensVal[i] = value;
+        calibratedValues[i] = value;
     }
     for(uint8_t i = 0; i < sensorCount; i++){
-        printf("%d: %ld, ", i, sensVal[i]);
+        printf("%d: %d, ", i, calibratedValues[i]);
     }
     printf("\n");
 }

@@ -3,8 +3,4 @@
 
 void controller(float line_deviation);
 
-
-
-
-
 #endif
