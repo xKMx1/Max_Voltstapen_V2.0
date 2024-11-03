@@ -16,11 +16,12 @@ const int BIN2 = 37;
 
 void app_main(void)
 {
-    // init_gpio();
-    // init_pwm();
+    init_gpio();
+    init_pwm();
     initADC();
 
-    int randArr[8] = {0};
+    uint16_t sensorValues[8] = {0};
+    uint16_t linePos = 0;
 
     for(uint16_t i = 0; i < 2000; i++){
         calibrate(&calibration);
@@ -28,9 +29,10 @@ void app_main(void)
     printf("done\n\n");
 
     while(1){
-        vTaskDelay(750 / portTICK_PERIOD_MS);
-        readSensValueCalibrated(randArr);
+        // vTaskDelay(750 / portTICK_PERIOD_MS);
+        readSensValueCalibrated(sensorValues);
+        linePos = readLine(sensorValues);
 
-        printf("Line: %d ", readLine(randArr));
+        controller(linePos);
     }
 }

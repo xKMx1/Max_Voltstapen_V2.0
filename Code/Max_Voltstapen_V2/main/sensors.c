@@ -70,7 +70,7 @@ uint16_t readLine(uint16_t* sensorValues){
         else {return((sensorCount - 1) * 1000);}
     }
 
-    lastPosition = avg / sum;
+    lastPosition = avg / sum - ((sensorCount - 1) * 1000 / 2);
 
     return lastPosition;
 }
