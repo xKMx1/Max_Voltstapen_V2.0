@@ -20,8 +20,8 @@ void app_main(void)
     init_pwm();
     initADC();
 
-    int16_t sensorValues[8] = {0};
-    uint16_t linePos = 0;
+    int sensorValues[8] = {0};
+    int16_t linePos = 0;
 
     for(uint16_t i = 0; i < 2000; i++){
         calibrate(&calibration);
@@ -29,10 +29,14 @@ void app_main(void)
     printf("done\n\n");
 
     while(1){
-        // vTaskDelay(750 / portTICK_PERIOD_MS);
         readSensValueCalibrated(sensorValues);
-        linePos = readLine(sensorValues);               //TODO overflow
-        printf("Line: %d", linePos);
+        // for(uint8_t i = 0; i < 8; i++){
+        //     printf("%d: %d, ", i, sensorValues[i]);
+        // }
+        // printf("\n");
+
+        linePos = readLine(sensorValues);               
+        printf("Line: %d ", linePos);
 
         controller(linePos);
     }

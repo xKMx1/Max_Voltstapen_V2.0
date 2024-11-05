@@ -44,18 +44,18 @@ void initADC(){
     }
 }
 
-int16_t readLine(int16_t* sensorValues){
-    // for(uint8_t i = 0; i < sensorCount; i++){
-    //     printf("%d: %d, ", i, sensorValues[i]);
-    // }
-    // printf("\n");
+int readLine(int* sensorValues){
+    for(uint8_t i = 0; i < sensorCount; i++){
+        printf("%d: %d, ", i, sensorValues[i]);
+    }
+    printf("\n");
 
     bool isOnLine = false;
-    int32_t avg = 0;
-    int16_t sum = 0;
+    int avg = 0;
+    int sum = 0;
 
     for(uint8_t i = 0; i < sensorCount; i++){
-        int16_t value = sensorValues[i];
+        int value = sensorValues[i];
 
         if(value > 200) { isOnLine = true; }
 
@@ -70,7 +70,7 @@ int16_t readLine(int16_t* sensorValues){
         else {return((sensorCount - 1) * 1000);}
     }
 
-    lastPosition = avg / sum - ((sensorCount - 1) * 1000 / 2);
+    lastPosition = avg / sum;
 
     return lastPosition;
 }
@@ -110,7 +110,7 @@ void readSensValueCalibrated(int* calibratedValues){
         int16_t value = 0;
 
         if(denominator != 0){
-            value = (((int32_t)rawValues[i]) - calMin) * 1000 / denominator;
+            value = (((int16_t)rawValues[i]) - calMin) * 1000 / denominator;
         }
 
         if (value < 0) { value = 0; }
@@ -118,10 +118,10 @@ void readSensValueCalibrated(int* calibratedValues){
 
         calibratedValues[i] = value;
     }
-    for(uint8_t i = 0; i < sensorCount; i++){
-        printf(" %d: %d,", i, calibratedValues[i]);
-    }
-    printf("\n");
+    // for(uint8_t i = 0; i < sensorCount; i++){
+    //     printf(" %d: %d,", i, calibratedValues[i]);
+    // }
+    // printf("\n");
 }
 
 void calibrate(struct CalibrationData* calibration){
