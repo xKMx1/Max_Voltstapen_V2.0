@@ -20,6 +20,6 @@ void initADC();
 void readSensValue(int* raw_values);
 void readSensValueCalibrated(int* rawValues);
 void calibrate(struct CalibrationData* calibration);
-uint16_t readLine(uint16_t* sensorValues);
+int16_t readLine(int16_t* sensorValues);
 
 #endif
