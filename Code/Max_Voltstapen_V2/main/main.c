@@ -7,6 +7,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "esp_task_wdt.h"
+#include "esp_timer.h"  // Include for time functions
 
 const int PWMA = 47;
 const int PWMB = 38;
@@ -23,6 +24,10 @@ void app_main(void)
     init_pwm();
     initADC();
 
+    unsigned long currLoopT = 0;
+    unsigned long prevLoopT = 0;
+    float deltaLoopT = 0; 
+
     int sensorValues[8] = {0};
     int16_t linePos = 0;
 
@@ -32,13 +37,16 @@ void app_main(void)
     printf("Calibration done\n\n");
 
     while (1) {
+        currLoopT = esp_timer_get_time();
+	    deltaLoopT = ((float)(currLoopT - prevLoopT)) / 1.0e6; // convert to seconds
         readSensValueCalibrated(sensorValues);
         linePos = readLine(sensorValues);
         printf("Line: %d\n", linePos);
 
-        controller(linePos);
+        controller(linePos, deltaLoopT);
         esp_task_wdt_reset();  // Reset the Task Watchdog timer
 
-        vTaskDelay(pdMS_TO_TICKS(10));  // Add delay to prevent the WDT trigger
+        // vTaskDelay(pdMS_TO_TICKS(10));  // Add delay to prevent the WDT trigger
+        prevLoopT = currLoopT;
     }
 }
