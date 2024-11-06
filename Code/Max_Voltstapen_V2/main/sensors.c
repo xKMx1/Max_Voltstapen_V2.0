@@ -48,7 +48,7 @@ int readLine(int* sensorValues){
     for(uint8_t i = 0; i < sensorCount; i++){
         printf("%d: %d, ", i, sensorValues[i]);
     }
-    printf("\n");
+    printf(" in Line function\n");
 
     bool isOnLine = false;
     int avg = 0;
@@ -103,11 +103,11 @@ void readSensValueCalibrated(int* calibratedValues){
     }
 
     for(uint8_t i = 0; i < sensorCount; i++){
-        uint16_t calMin = calibration.minimum[i];
-        uint16_t calMax = calibration.maximum[i];
+        int calMin = calibration.minimum[i];
+        int calMax = calibration.maximum[i];
 
-        uint16_t denominator = calMax - calMin;
-        int16_t value = 0;
+        int denominator = calMax - calMin;
+        int value = 0;
 
         if(denominator != 0){
             value = (((int16_t)rawValues[i]) - calMin) * 1000 / denominator;

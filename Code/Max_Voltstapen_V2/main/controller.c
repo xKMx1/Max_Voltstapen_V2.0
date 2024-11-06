@@ -2,13 +2,13 @@
 #include "motors.h"
 
 const float WHEELBASE = 17.5;
-const float default_speed = 20;
+const float default_speed = 12.5;
 
 void controller(float line_deviation){          // line deviation from 3500 to 7000 -> target value = 0
-    float kp = 1;
+    float kp = 0.1;
     // float kd = 1;
 
-    float error = 3.5f - line_deviation/1000;
+    float error = 35.f - line_deviation/100;
     // static float last_error = 0.f;
 
     // float derivative = (error - last_error) * deltaT;
@@ -19,7 +19,7 @@ void controller(float line_deviation){          // line deviation from 3500 to 7
 
     // printf("A: %f, B: %f, error:%f\n", duty_left, duty_right, error);
     set_motorA_direction(1);
-    set_motorB_direction(1);
-    set_motorA_speed(duty_right);
-    set_motorB_speed(duty_left);
+    set_motorB_direction(0);
+    set_motorA_speed_smooth(duty_right);
+    set_motorB_speed_smooth(duty_left);
 }
