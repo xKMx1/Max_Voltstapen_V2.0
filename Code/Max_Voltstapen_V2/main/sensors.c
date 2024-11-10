@@ -6,16 +6,17 @@ adc_oneshot_unit_handle_t adc2_handle;
 #define NUM_CHANNELS_ADC1 4
 #define NUM_CHANNELS_ADC2 4
 
-#define XMAX 53.0
+#define XMAX 53.0                               // distance from middle to the end of the sensor board
 
 adc_channel_t adc1_channels[NUM_CHANNELS_ADC1] = {ADC_CHANNEL_5, ADC_CHANNEL_4, ADC_CHANNEL_3, ADC_CHANNEL_6};
 adc_channel_t adc2_channels[NUM_CHANNELS_ADC2] = {ADC_CHANNEL_7, ADC_CHANNEL_6, ADC_CHANNEL_5, ADC_CHANNEL_4};
 
 const uint8_t sensorCount = NUM_CHANNELS_ADC1 + NUM_CHANNELS_ADC2;
+const uint8_t singleCalibrationRunInterval = 10;
 
 struct CalibrationData calibration = {0, NULL, NULL};
 
-uint32_t lastPosition = (sensorCount - 1) * 1000 / 2;
+uint32_t lastPosition = (sensorCount - 1) * 1000 / 2;   // last position, starting in the middle
 
 void initADC(){
 
@@ -86,33 +87,36 @@ float readLine(int* sensorValues, int* slowDown){
     return angle_error;
 }
 
+// Read raw values from KTIR sensros
 void readSensValue(int* raw_values){   // raw_values is 8 element array
 
     for (int i = 0; i < NUM_CHANNELS_ADC1; i++) {
         ESP_ERROR_CHECK(adc_oneshot_read(adc1_handle, adc1_channels[i], &raw_values[i]));
-    }
-
-    for (int i = 0; i < NUM_CHANNELS_ADC2; i++) {
         ESP_ERROR_CHECK(adc_oneshot_read(adc2_handle, adc2_channels[i], &raw_values[NUM_CHANNELS_ADC1 + i]));
     }
 
-    // for(int i = 0; i < NUM_CHANNELS_ADC1 + NUM_CHANNELS_ADC2; i++){
-    //     printf("%d: %d, ", i, raw_values[i]);
+    // TODO check if doing 3 adc readings at the same time works
+
+    // for (int i = 0; i < NUM_CHANNELS_ADC2; i++) {
+    //     ESP_ERROR_CHECK(adc_oneshot_read(adc2_handle, adc2_channels[i], &raw_values[NUM_CHANNELS_ADC1 + i]));
     // }
-    // printf("NIEZKALIBROWANE\n");
 }
 
+// Read values from KTIR sensors and convert them accordingly into 0-1000 range
 void readSensValueCalibrated(int* calibratedValues){
     int rawValues[sensorCount] = {};
     int wageMask[] = {1, 1, 1, 1,      1, 1, 1, 1};
 
     for (int i = 0; i < NUM_CHANNELS_ADC1; i++) {
         ESP_ERROR_CHECK(adc_oneshot_read(adc1_handle, adc1_channels[i], &rawValues[i]));
-    }
-
-    for (int i = 0; i < NUM_CHANNELS_ADC2; i++) {
         ESP_ERROR_CHECK(adc_oneshot_read(adc2_handle, adc2_channels[i], &rawValues[NUM_CHANNELS_ADC1 + i]));
     }
+
+    // TODO check if doing 3 adc readings at the same time works
+
+    // for (int i = 0; i < NUM_CHANNELS_ADC2; i++) {
+    //     ESP_ERROR_CHECK(adc_oneshot_read(adc2_handle, adc2_channels[i], &rawValues[NUM_CHANNELS_ADC1 + i]));
+    // }
 
     for(uint8_t i = 0; i < sensorCount; i++){
         int calMin = calibration.minimum[i];
@@ -128,23 +132,17 @@ void readSensValueCalibrated(int* calibratedValues){
         if (value < 0) { value = 0; }
         else if (value > 1000) { value = 1000; }
 
-        calibratedValues[i] = value;
-    }
-    for(int i = 0; i < sensorCount; i++){
-        calibratedValues[i] *= wageMask[i];
-    }
-    // for(uint8_t i = 0; i < sensorCount; i++){
-    //     printf(" %d: %d,", i, calibratedValues[i]);
-    // }
-    // printf("\n");
+        calibratedValues[i] = value      // save calculated value to the array
+    }                                    // TODO change how wageMask works
 }
 
+// 
 void calibrate(struct CalibrationData* calibration){
     int sensorValues[sensorCount];
     uint16_t maxSensorValues[sensorCount];
     uint16_t minSensorValues[sensorCount];
 
-    if(!calibration->initialized){
+    if(!calibration->initialized){               // initialize calibration data with sample values
         uint16_t* oldMax = calibration->maximum;
 
         calibration->maximum = (uint16_t*)realloc(calibration->maximum, sizeof(uint16_t) * sensorCount);
@@ -163,13 +161,13 @@ void calibrate(struct CalibrationData* calibration){
 
         for (uint8_t i = 0; i < sensorCount; i++){
             calibration->maximum[i] = 0;
-            calibration->minimum[i] = 1000 * sensorCount;
+            calibration->minimum[i] = 1000 * (sensorCount - 1);
         }
 
         calibration->initialized = true;
     }
 
-    for(uint8_t j = 0; j < 10; j++){
+    for(uint8_t j = 0; j < singleCalibrationRunInterval; j++){      // find max and min during singleCalibrationRunInverval times
         readSensValue(sensorValues);
 
         for (uint8_t i = 0; i < sensorCount; i++){
@@ -200,4 +198,6 @@ void calibrate(struct CalibrationData* calibration){
             calibration->minimum[i] = maxSensorValues[i];
         }
     }
+
+    // TODO dealocate arrays
 }
