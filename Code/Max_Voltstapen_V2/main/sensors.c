@@ -6,6 +6,8 @@ adc_oneshot_unit_handle_t adc2_handle;
 #define NUM_CHANNELS_ADC1 4
 #define NUM_CHANNELS_ADC2 4
 
+#define XMAX 53.0
+
 adc_channel_t adc1_channels[NUM_CHANNELS_ADC1] = {ADC_CHANNEL_5, ADC_CHANNEL_4, ADC_CHANNEL_3, ADC_CHANNEL_6};
 adc_channel_t adc2_channels[NUM_CHANNELS_ADC2] = {ADC_CHANNEL_7, ADC_CHANNEL_6, ADC_CHANNEL_5, ADC_CHANNEL_4};
 
@@ -44,12 +46,12 @@ void initADC(){
     }
 }
 
-int readLine(int* sensorValues){
+float readLine(int* sensorValues, int* slowDown){
     for(uint8_t i = 0; i < sensorCount; i++){
         printf("%d: %d, ", i, sensorValues[i]);
     }
     printf(" in Line function\n");
-
+    *slowDown = 0;
     bool isOnLine = false;
     int avg = 0;
     int sum = 0;
@@ -57,22 +59,31 @@ int readLine(int* sensorValues){
     for(uint8_t i = 0; i < sensorCount; i++){
         int value = sensorValues[i];
 
-        if(value > 200) { isOnLine = true; }
+        if(value > 200) { 
+            isOnLine = true; 
+            (*slowDown)++;
+            }            //TODO do zmienienia na 200 i 50
 
         if(value > 50){
             avg += (int32_t)value * (i * 1000);
             sum += value;
         }
+
+        
     }
 
     if(!isOnLine){
-        if(lastPosition  < (sensorCount - 1) * 1000 / 2) {return 0;}
-        else {return((sensorCount - 1) * 1000);}
+        if(lastPosition  < (sensorCount - 1) * 1000 / 2) {lastPosition =  0;}
+        else {lastPosition = ((sensorCount - 1) * 1000);}
+    }
+    else{
+        lastPosition = avg / sum;
     }
 
-    lastPosition = avg / sum;
-
-    return lastPosition;
+    float deviation = ((XMAX / 3500.f) * lastPosition) - XMAX;            // distance from middle axis of the robot to the sensor which has line underneath
+    float angle_error = asin(deviation / (sqrt((deviation * deviation) + (29756.25f))));   // in radians, max 0,2314
+    
+    return angle_error;
 }
 
 void readSensValue(int* raw_values){   // raw_values is 8 element array
@@ -93,6 +104,7 @@ void readSensValue(int* raw_values){   // raw_values is 8 element array
 
 void readSensValueCalibrated(int* calibratedValues){
     int rawValues[sensorCount] = {};
+    int wageMask[] = {1, 1, 1, 1,      1, 1, 1, 1};
 
     for (int i = 0; i < NUM_CHANNELS_ADC1; i++) {
         ESP_ERROR_CHECK(adc_oneshot_read(adc1_handle, adc1_channels[i], &rawValues[i]));
@@ -117,6 +129,9 @@ void readSensValueCalibrated(int* calibratedValues){
         else if (value > 1000) { value = 1000; }
 
         calibratedValues[i] = value;
+    }
+    for(int i = 0; i < sensorCount; i++){
+        calibratedValues[i] *= wageMask[i];
     }
     // for(uint8_t i = 0; i < sensorCount; i++){
     //     printf(" %d: %d,", i, calibratedValues[i]);

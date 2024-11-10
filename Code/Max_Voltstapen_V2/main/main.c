@@ -1,13 +1,13 @@
 #include <stdio.h>
-
 #include "sensors.h"
 #include "motors.h"
 #include "controller.h"
+#include "remote_control.h"
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "esp_task_wdt.h"
-#include "esp_timer.h"  // Include for time functions
+#include "esp_timer.h"
 
 const int PWMA = 47;
 const int PWMB = 38;
@@ -16,9 +16,11 @@ const int AIN2 = 48;
 const int BIN1 = 36;
 const int BIN2 = 37;
 
-void app_main(void)
-{
-    ESP_ERROR_CHECK(esp_task_wdt_add(NULL));  // Register main task with Task Watchdog
+void app_main(void) {
+    ESP_ERROR_CHECK(esp_task_wdt_add(NULL));
+
+    // init_wifi();          // Initialize WiFi
+    // start_web_server();   // Start web server
 
     init_gpio();
     init_pwm();
@@ -26,10 +28,12 @@ void app_main(void)
 
     unsigned long currLoopT = 0;
     unsigned long prevLoopT = 0;
-    float deltaLoopT = 0; 
+    float deltaLoopT = 0;
+
+    int slowDown = 0;
 
     int sensorValues[8] = {0};
-    int16_t linePos = 0;
+    float linePos = 0;
 
     for (uint16_t i = 0; i < 2000; i++) {
         calibrate(&calibration);
@@ -38,15 +42,15 @@ void app_main(void)
 
     while (1) {
         currLoopT = esp_timer_get_time();
-	    deltaLoopT = ((float)(currLoopT - prevLoopT)) / 1.0e6; // convert to seconds
+        deltaLoopT = ((float)(currLoopT - prevLoopT)) / 1.0e6;
         readSensValueCalibrated(sensorValues);
-        linePos = readLine(sensorValues);
-        printf("Line: %d\n", linePos);
+        linePos = readLine(sensorValues, &slowDown);
+        
+        // printf("Line: %f\n", linePos);
 
-        controller(linePos, deltaLoopT);
-        esp_task_wdt_reset();  // Reset the Task Watchdog timer
+        controller(linePos, deltaLoopT, &slowDown);
+        // esp_task_wdt_reset();
 
-        // vTaskDelay(pdMS_TO_TICKS(10));  // Add delay to prevent the WDT trigger
         prevLoopT = currLoopT;
     }
 }

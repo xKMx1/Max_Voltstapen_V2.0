@@ -4,6 +4,8 @@
 #include "esp_adc/adc_oneshot.h"
 #include "hal/adc_types.h"
 
+#include <math.h>
+
 struct CalibrationData
 {
     bool initialized;
@@ -20,6 +22,6 @@ void initADC();
 void readSensValue(int* raw_values);
 void readSensValueCalibrated(int* rawValues);
 void calibrate(struct CalibrationData* calibration);
-int readLine(int* sensorValues);
+float readLine(int* sensorValues, int* slowDown);
 
 #endif
