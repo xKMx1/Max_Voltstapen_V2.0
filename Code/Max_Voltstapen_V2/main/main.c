@@ -19,12 +19,10 @@ const int BIN2 = 37;
 void app_main(void) {
     ESP_ERROR_CHECK(esp_task_wdt_add(NULL));
 
-    // init_wifi();          // Initialize WiFi
-    // start_web_server();   // Start web server
-
     init_gpio();
     init_pwm();
     initADC();
+    // init_wifi();
 
     unsigned long currLoopT = 0;
     unsigned long prevLoopT = 0;
@@ -37,20 +35,25 @@ void app_main(void) {
 
     for (uint16_t i = 0; i < 2000; i++) {
         calibrate(&calibration);
+        esp_task_wdt_reset();
+        vTaskDelay(pdMS_TO_TICKS(10));
     }
     printf("Calibration done\n\n");
 
     while (1) {
+        // Dodatkowe logi
         currLoopT = esp_timer_get_time();
         deltaLoopT = ((float)(currLoopT - prevLoopT)) / 1.0e6;
         readSensValueCalibrated(sensorValues);
-        linePos = readLine(sensorValues, &slowDown);
+        linePos = readLine(sensorValues, &slowDown) - 3500.f;
         
         // printf("Line: %f\n", linePos);
 
         controller(linePos, deltaLoopT, &slowDown);
-        // esp_task_wdt_reset();
 
         prevLoopT = currLoopT;
+
+        esp_task_wdt_reset();
+        vTaskDelay(pdMS_TO_TICKS(10));
     }
 }

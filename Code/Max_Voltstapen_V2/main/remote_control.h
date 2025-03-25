@@ -1,11 +1,12 @@
-#ifndef REMOTE_CONTROL_H
-#define REMOTE_CONTROL_H
+#ifndef WIFI_HTTP_SERVER_H
+#define WIFI_HTTP_SERVER_H
 
 void init_wifi(void);
-void start_web_server(void);
+void start_server(void);
+
 float get_kp(void);
 float get_kd(void);
-void set_kp(float kp);
-void set_kd(float kd);
+void set_kp(float new_kp);
+void set_kd(float new_kd);
 
-#endif // REMOTE_CONTROL_H
+#endif // WIFI_HTTP_SERVER_H

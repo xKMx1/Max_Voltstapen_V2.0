@@ -1,66 +1,61 @@
 #include "remote_control.h"
 #include "esp_log.h"
+#include "nvs_flash.h"
+#include "string.h"
+#include "stdio.h"
 #include "esp_wifi.h"
 #include "esp_event.h"
 #include "esp_http_server.h"
 #include "nvs_flash.h"
-#include "string.h"
-#include <stdio.h>
 
-#define WIFI_SSID "SKAR"       // Zamień na swoją nazwę sieci WiFi
-#define WIFI_PASS "kristalA152-+0"   // Zamień na hasło swojej sieci WiFi
+static float kp = 0.08; // Domyślna wartość dla kp
+static float kd = 0.08; // Domyślna wartość dla kd
+static const char *TAG = "WiFi";
 
-static float kp = 0.08;  // Domyślna wartość dla kp
-static float kd = 0.08;  // Domyślna wartość dla kd
+static const char *html_form = "\
+<!DOCTYPE html>\
+<html>\
+<head><title>PID Control</title></head>\
+<body>\
+<form action='/update' method='post'>\
+    kp: <input type='text' name='kp' value='%.2f'><br>\
+    kd: <input type='text' name='kd' value='%.2f'><br>\
+    <input type='submit' value='Update'>\
+</form>\
+</body>\
+</html>";
 
-// Funkcja handler obsługująca endpoint "/update_params"
-static esp_err_t kp_kd_handler(httpd_req_t *req) {
-    char buf[100];
-    int ret = httpd_req_recv(req, buf, req->content_len);
-    if (ret <= 0) {
-        httpd_resp_send_500(req);
-        return ESP_FAIL;
-    }
-    
-    buf[ret] = '\0';
-
-    // Parsowanie parametrów kp i kd z body requestu (np. "kp=0.1&kd=0.15")
-    sscanf(buf, "kp=%f&kd=%f", &kp, &kd);
-
-    // Wysłanie odpowiedzi
-    char response[100];
-    sprintf(response, "Updated kp to %.2f and kd to %.2f", kp, kd);
+static esp_err_t root_handler(httpd_req_t *req) {
+    char response[512];
+    snprintf(response, sizeof(response), html_form, kp, kd);
     httpd_resp_send(req, response, HTTPD_RESP_USE_STRLEN);
-    
     return ESP_OK;
 }
 
-// Getter dla parametrów kp i kd
-float get_kp(void) { return kp; }
-float get_kd(void) { return kd; }
-
-// Setter dla parametrów kp i kd
-void set_kp(float new_kp) { kp = new_kp; }
-void set_kd(float new_kd) { kd = new_kd; }
-
-// Funkcja uruchamiająca serwer HTTP
-void start_web_server(void) {
-    httpd_config_t config = HTTPD_DEFAULT_CONFIG();
-    httpd_handle_t server = NULL;
-
-    if (httpd_start(&server, &config) == ESP_OK) {
-        httpd_uri_t kp_kd_uri = {
-            .uri      = "/update_params",
-            .method   = HTTP_POST,
-            .handler  = kp_kd_handler
-        };
-        httpd_register_uri_handler(server, &kp_kd_uri);
+static esp_err_t update_handler(httpd_req_t *req) {
+    char buf[100];
+    int ret = httpd_req_recv(req, buf, sizeof(buf) - 1);
+    if (ret <= 0) {
+        return ESP_FAIL;
     }
+    buf[ret] = '\0';
+    sscanf(buf, "kp=%f&kd=%f", &kp, &kd);
+    ESP_LOGI(TAG, "Updated kp=%.2f, kd=%.2f", kp, kd);
+    httpd_resp_send(req, "Updated successfully", HTTPD_RESP_USE_STRLEN);
+    return ESP_OK;
 }
 
-// Funkcja inicjalizująca WiFi
+void start_server(void) {
+    httpd_config_t config = HTTPD_DEFAULT_CONFIG();
+    httpd_handle_t server = NULL;
+    httpd_start(&server, &config);
+    httpd_uri_t uri_get = { .uri = "/", .method = HTTP_GET, .handler = root_handler, .user_ctx = NULL };
+    httpd_uri_t uri_post = { .uri = "/update", .method = HTTP_POST, .handler = update_handler, .user_ctx = NULL };
+    httpd_register_uri_handler(server, &uri_get);
+    httpd_register_uri_handler(server, &uri_post);
+}
+
 void init_wifi(void) {
-    // Inicjalizacja NVS
     esp_err_t ret = nvs_flash_init();
     if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
         ESP_ERROR_CHECK(nvs_flash_erase());
@@ -68,31 +63,46 @@ void init_wifi(void) {
     }
     ESP_ERROR_CHECK(ret);
 
-    // Inicjalizacja sieci za pomocą esp_netif
+    ESP_LOGI(TAG, "Initializing WiFi...");
     esp_netif_init();
-    esp_netif_create_default_wifi_sta();  // Tworzenie interfejsu WiFi w trybie stacji
-
-    // Konfiguracja WiFi
+    esp_event_loop_create_default();
+    esp_netif_create_default_wifi_sta();
     wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
-    ESP_ERROR_CHECK(esp_wifi_init(&cfg));
+    esp_wifi_init(&cfg);
 
     wifi_config_t wifi_config = {
         .sta = {
-            .ssid = WIFI_SSID,
-            .password = WIFI_PASS,
+            .ssid = "SKAR",
+            .password = "kristalA152-+0"
         },
     };
 
-    ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA)); // Tryb klienta WiFi
-    ESP_ERROR_CHECK(esp_wifi_set_config(ESP_IF_WIFI_STA, &wifi_config));
-    ESP_ERROR_CHECK(esp_wifi_start());
+    esp_wifi_set_mode(WIFI_MODE_STA);
+    esp_wifi_set_config(ESP_IF_WIFI_STA, &wifi_config);
+    esp_wifi_start();
+    ESP_LOGI(TAG, "Waiting for WiFi connection...");
+vTaskDelay(pdMS_TO_TICKS(5000)); // Poczekaj 5 sek.
 
-    ESP_LOGI("WiFi", "Connecting to %s...", WIFI_SSID);
+esp_netif_t *netif = esp_netif_get_handle_from_ifkey("WIFI_STA_DEF");
+esp_netif_ip_info_t ip_info;
+esp_netif_get_ip_info(netif, &ip_info);
 
-    // Oczekiwanie na połączenie i pobranie adresu IP
-    esp_netif_t *netif = esp_netif_get_handle_from_ifkey("WIFI_STA_DEF");
-    esp_netif_ip_info_t ip_info;  // Użycie poprawnego typu
-    if (esp_netif_get_ip_info(netif, &ip_info) == ESP_OK) {  // Użycie poprawnej funkcji
-        printf("ESP32 IP Address: " IPSTR "\n", IP2STR(&ip_info.ip));
-    }
+if (ip_info.ip.addr == 0) {
+    ESP_LOGE(TAG, "WiFi connection failed!");
+} else {
+    ESP_LOGI(TAG, "Connected! IP Address: " IPSTR, IP2STR(&ip_info.ip));
 }
+
+    ESP_LOGI(TAG, "WiFi initialized");
+
+    // esp_netif_t *netif = esp_netif_get_handle_from_ifkey("WIFI_STA_DEF");
+    // esp_netif_ip_info_t ip_info;
+    // esp_netif_get_ip_info(netif, &ip_info);
+    // ESP_LOGI(TAG, "IP Address: " IPSTR, IP2STR(&ip_info.ip));
+
+}
+
+float get_kp(void) { return kp; }
+float get_kd(void) { return kd; }
+void set_kp(float new_kp) { kp = new_kp; }
+void set_kd(float new_kd) { kd = new_kd; }

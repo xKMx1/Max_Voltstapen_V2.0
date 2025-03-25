@@ -1,5 +1,9 @@
 #include "sensors.h"
 
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "esp_task_wdt.h"
+
 adc_oneshot_unit_handle_t adc1_handle;
 adc_oneshot_unit_handle_t adc2_handle;
 
@@ -48,10 +52,11 @@ void initADC(){
 }
 
 float readLine(int* sensorValues, int* slowDown){
-    for(uint8_t i = 0; i < sensorCount; i++){
-        printf("%d: %d, ", i, sensorValues[i]);
-    }
-    printf(" in Line function\n");
+    // for(uint8_t i = 0; i < sensorCount; i++){
+    //     printf("%d: %d, ", i, sensorValues[i]);
+    // }
+    // printf(" \n");
+    // printf(" \n");
     *slowDown = 0;
     bool isOnLine = false;
     int avg = 0;
@@ -60,31 +65,36 @@ float readLine(int* sensorValues, int* slowDown){
     for(uint8_t i = 0; i < sensorCount; i++){
         int value = sensorValues[i];
 
-        if(value > 200) { 
-            isOnLine = true; 
+        if(value > 50) { 
+            // isOnLine = true; 
             (*slowDown)++;
-            }            //TODO do zmienienia na 200 i 50
+                        //TODO do zmienienia na 200 i 50
 
-        if(value > 50){
             avg += (int32_t)value * (i * 1000);
             sum += value;
         }
-
-        
+        esp_task_wdt_reset();
     }
-
-    if(!isOnLine){
-        if(lastPosition  < (sensorCount - 1) * 1000 / 2) {lastPosition =  0;}
-        else {lastPosition = ((sensorCount - 1) * 1000);}
-    }
-    else{
+    
+    // if(!isOnLine){
+    //     if(lastPosition  < (sensorCount - 1) * 1000 / 2) {lastPosition =  0;}
+    //     else {lastPosition = ((sensorCount - 1) * 1000);}
+    // }
+    // else{
+    if(sum != 0){
         lastPosition = avg / sum;
+
     }
+    // }
+
+    // printf("%d,\t %d,\t %ld\n", avg, sum, lastPosition);
+
 
     float deviation = ((XMAX / 3500.f) * lastPosition) - XMAX;            // distance from middle axis of the robot to the sensor which has line underneath
     float angle_error = asin(deviation / (sqrt((deviation * deviation) + (29756.25f))));   // in radians, max 0,2314
     
-    return angle_error;
+    // return angle_error;
+    return lastPosition;
 }
 
 // Read raw values from KTIR sensros
@@ -132,7 +142,7 @@ void readSensValueCalibrated(int* calibratedValues){
         if (value < 0) { value = 0; }
         else if (value > 1000) { value = 1000; }
 
-        calibratedValues[i] = value      // save calculated value to the array
+        calibratedValues[i] = value;      // save calculated value to the array
     }                                    // TODO change how wageMask works
 }
 
