@@ -1,14 +1,21 @@
 #include "controller.h"
 #include "motors.h"
 #include "remote_control.h"
+#include <math.h>
 
 const float WHEELBASE = 0.175;
-float default_speed = 50;                                                             //20/800
+float default_speed = 50;   
+float spinning_speed = 25;                                                          
 
 void controller(float line_deviation, float deltaT, int* slowDown) {
-    float kp = 0.03f;
-    float kd = 0.3f;
+    float kp = 0.012f;
+    float kd = 0.9f;
     default_speed = 30;
+
+    // float kp = 0.012f;
+    // float kd = 0.9f;
+    // default_speed = 30;
+    // napiecie na kurwie - 7,46
 
     float error = /*0.f -*/ line_deviation;
     static float last_error = 0.f;
@@ -30,6 +37,7 @@ void controller(float line_deviation, float deltaT, int* slowDown) {
     float duty_left = default_speed + turning_speed;
     float duty_right = default_speed - turning_speed;    
 
+
     // printf("slowDOwn: %d\n", *slowDown);
 
     if(duty_left > 255) { duty_left = 255;};
@@ -37,12 +45,26 @@ void controller(float line_deviation, float deltaT, int* slowDown) {
     if(duty_left < 0) { duty_left = 0;};
     if(duty_right < 0) { duty_right = 0;};
 
-    printf("error: %f, left: %f, right: %f\n", error, duty_left, duty_right);
+    // printf("error: %f, left: %f, right: %f\n", error, duty_left, duty_right);
 
-    set_motorA_direction(1);
-    set_motorB_direction(0);
-    set_motorA_speed(duty_right);
-    set_motorB_speed(duty_left);
+    if(fabs(error) < 3400){        
+        set_motorA_direction(1);
+        set_motorB_direction(0);
+        set_motorA_speed(duty_right);
+        set_motorB_speed(duty_left);
+    }
+    else if(error > 3400){
+        set_motorA_direction(0);
+        set_motorB_direction(0);
+        set_motorA_speed(spinning_speed);
+        set_motorB_speed(spinning_speed);
+    }
+    else if(error < -3400){
+        set_motorA_direction(1);
+        set_motorB_direction(1);
+        set_motorA_speed(spinning_speed);
+        set_motorB_speed(spinning_speed);
+    }
 
     last_error = error;
 }

@@ -33,7 +33,7 @@ void app_main(void) {
     int sensorValues[8] = {0};
     float linePos = 0;
 
-    for (uint16_t i = 0; i < 2000; i++) {
+    for (uint16_t i = 0; i < 1000; i++) {
         calibrate(&calibration);
         esp_task_wdt_reset();
         vTaskDelay(pdMS_TO_TICKS(10));

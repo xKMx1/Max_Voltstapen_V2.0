@@ -17,7 +17,8 @@
     "idf.toolsPath": "/home/kamil/.espressif",
     "idf.flashType": "UART",
     "files.associations": {
-        "remote_control.h": "c"
+        "remote_control.h": "c",
+        "task.h": "c"
     },
     "idf.gitPath": "git",
     "idf.pythonInstallPath": "/home/kamil/venv-ardupilot/bin/python"

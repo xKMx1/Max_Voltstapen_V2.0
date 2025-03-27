@@ -52,10 +52,10 @@ void initADC(){
 }
 
 float readLine(int* sensorValues, int* slowDown){
-    // for(uint8_t i = 0; i < sensorCount; i++){
-    //     printf("%d: %d, ", i, sensorValues[i]);
-    // }
-    // printf(" \n");
+    for(uint8_t i = 0; i < sensorCount; i++){
+        printf("%d: %d, ", i, sensorValues[i]);
+    }
+    printf(" \n");
     // printf(" \n");
     *slowDown = 0;
     bool isOnLine = false;
@@ -65,29 +65,28 @@ float readLine(int* sensorValues, int* slowDown){
     for(uint8_t i = 0; i < sensorCount; i++){
         int value = sensorValues[i];
 
-        if(value > 50) { 
-            // isOnLine = true; 
-            (*slowDown)++;
-                        //TODO do zmienienia na 200 i 50
+        if(value > 200){
+            isOnLine = true; 
+        }
 
+        if(value > 50){ 
             avg += (int32_t)value * (i * 1000);
             sum += value;
         }
         esp_task_wdt_reset();
     }
     
-    // if(!isOnLine){
-    //     if(lastPosition  < (sensorCount - 1) * 1000 / 2) {lastPosition =  0;}
-    //     else {lastPosition = ((sensorCount - 1) * 1000);}
-    // }
+    if(!isOnLine){
+        if(lastPosition  < (sensorCount - 1) * 1000 / 2) {lastPosition =  0;}
+        else {lastPosition = ((sensorCount - 1) * 1000);}
+    }
     // else{
     if(sum != 0){
         lastPosition = avg / sum;
-
     }
     // }
 
-    // printf("%d,\t %d,\t %ld\n", avg, sum, lastPosition);
+    printf("%ld", lastPosition);
 
 
     float deviation = ((XMAX / 3500.f) * lastPosition) - XMAX;            // distance from middle axis of the robot to the sensor which has line underneath
