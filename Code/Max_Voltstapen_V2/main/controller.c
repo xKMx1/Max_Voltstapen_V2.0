@@ -17,54 +17,38 @@ void controller(float line_deviation, float deltaT, int* slowDown) {
     // default_speed = 30;
     // napiecie na kurwie - 7,46
 
-    float error = /*0.f -*/ line_deviation;
+    float error = /* 0.f - */ line_deviation;
     static float last_error = 0.f;
 
     float derivative = (error - last_error) * deltaT;
     
     float turning_speed = kp * error + kd * derivative;
-    // printf("der: %f\n", kp*error);
     
-    // if(*slowDown > 3){ 
-    //     default_speed = 30;
-    //     // duty_left = 0;
-    //     // duty_left = 40;
-    // }
-
-    // float duty_left = (2 * default_speed - turning_speed * WHEELBASE) / 2;
-    // float duty_right = 2 * default_speed - duty_left;
-
     float duty_left = default_speed + turning_speed;
     float duty_right = default_speed - turning_speed;    
 
+    if (duty_left > 255) duty_left = 255;
+    if (duty_right > 255) duty_right = 255;
+    if (duty_left < -255) duty_left = -255;
+    if (duty_right < -255) duty_right = -255;
 
-    // printf("slowDOwn: %d\n", *slowDown);
-
-    if(duty_left > 255) { duty_left = 255;};
-    if(duty_right > 255) { duty_right = 255;};
-    if(duty_left < 0) { duty_left = 0;};
-    if(duty_right < 0) { duty_right = 0;};
-
-    // printf("error: %f, left: %f, right: %f\n", error, duty_left, duty_right);
-
-    if(fabs(error) < 3400){        
-        set_motorA_direction(1);
-        set_motorB_direction(0);
-        set_motorA_speed(duty_right);
-        set_motorB_speed(duty_left);
-    }
-    else if(error > 3400){
+    if (duty_left < 0) {
         set_motorA_direction(0);
-        set_motorB_direction(0);
-        set_motorA_speed(spinning_speed);
-        set_motorB_speed(spinning_speed);
-    }
-    else if(error < -3400){
+        duty_left = -duty_left;   
+    } else {
         set_motorA_direction(1);
-        set_motorB_direction(1);
-        set_motorA_speed(spinning_speed);
-        set_motorB_speed(spinning_speed);
     }
-
+    
+    if (duty_right < 0) {
+        set_motorB_direction(1);  
+        duty_right = -duty_right; 
+    } else {
+        set_motorB_direction(0);
+    }
+    
+    // Ustawienie prędkości silników
+    set_motorA_speed(duty_right);
+    set_motorB_speed(duty_left);
+    
     last_error = error;
 }
