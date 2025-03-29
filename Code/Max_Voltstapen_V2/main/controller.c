@@ -5,12 +5,12 @@
 
 const float WHEELBASE = 0.175;
 float default_speed = 50;   
-float spinning_speed = 25;                                                          
+float spinning_speed = 35;                                                          
 
 void controller(float line_deviation, float deltaT, int* slowDown) {
-    float kp = 0.012f;
-    float kd = 0.9f;
-    default_speed = 30;
+    float kp = 0.02f;
+    float kd = 6.0f;
+    default_speed = 40;
 
     // float kp = 0.012f;
     // float kd = 0.9f;
