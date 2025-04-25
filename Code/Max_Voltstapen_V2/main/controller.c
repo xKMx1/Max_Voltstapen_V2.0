@@ -8,8 +8,8 @@ float default_speed = 50;
 float spinning_speed = 25;                                                          
 
 void controller(float line_deviation, float deltaT, int* slowDown) {
-    float kp = 0.012f;
-    float kd = 0.9f;
+    float kp = 0.0075f;
+    float kd = 7.0f;
     default_speed = 30;
 
     // float kp = 0.012f;
@@ -33,22 +33,23 @@ void controller(float line_deviation, float deltaT, int* slowDown) {
     if (duty_right < -255) duty_right = -255;
 
     if (duty_left < 0) {
-        set_motorA_direction(0);
+        set_motorB_direction(1);
         duty_left = -duty_left;   
     } else {
-        set_motorA_direction(1);
+        set_motorB_direction(0);
     }
     
     if (duty_right < 0) {
-        set_motorB_direction(1);  
+        set_motorA_direction(0);  
         duty_right = -duty_right; 
     } else {
-        set_motorB_direction(0);
+        set_motorA_direction(1);
     }
     
     // Ustawienie prędkości silników
     set_motorA_speed(duty_right);
     set_motorB_speed(duty_left);
+
     
     last_error = error;
 }
