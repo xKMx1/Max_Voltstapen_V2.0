@@ -52,10 +52,9 @@ void initADC(){
 }
 
 float readLine(int* sensorValues, int* slowDown){
-    for(uint8_t i = 0; i < sensorCount; i++){
-        printf("%d: %d, ", i, sensorValues[i]);
-    }
-    printf(" \n");
+    // for(uint8_t i = 0; i < sensorCount; i++){
+    //     printf("%d: %d, ", i, sensorValues[i]);
+    // }
     // printf(" \n");
     *slowDown = 0;
     bool isOnLine = false;
@@ -86,7 +85,7 @@ float readLine(int* sensorValues, int* slowDown){
     }
     // }
 
-    printf("%ld", lastPosition);
+    // printf("%ld", lastPosition);
 
 
     float deviation = ((XMAX / 3500.f) * lastPosition) - XMAX;            // distance from middle axis of the robot to the sensor which has line underneath

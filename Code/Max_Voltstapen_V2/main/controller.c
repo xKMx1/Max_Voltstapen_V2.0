@@ -1,16 +1,17 @@
 #include "controller.h"
 #include "motors.h"
-#include "remote_control.h"
+#include "wifi_manager.h"
 #include <math.h>
 
 const float WHEELBASE = 0.175;
-float default_speed = 50;   
-float spinning_speed = 25;                                                          
+float spinning_speed = 25;   
+
+float kp = 0.0075f;
+float kd = 7.0f;
+float default_speed = 30.f;
+bool robot_running = false;
 
 void controller(float line_deviation, float deltaT, int* slowDown) {
-    float kp = 0.0075f;
-    float kd = 7.0f;
-    default_speed = 30;
 
     // float kp = 0.012f;
     // float kd = 0.9f;
