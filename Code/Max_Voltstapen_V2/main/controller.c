@@ -3,6 +3,10 @@
 #include "wifi_manager.h"
 #include <math.h>
 
+#include "logger.h"
+#include "encoders.h"
+#include "esp_timer.h"
+
 const float WHEELBASE = 0.175;
 float spinning_speed = 25;   
 
@@ -51,6 +55,8 @@ void controller(float line_deviation, float deltaT, int* slowDown) {
     set_motorA_speed(duty_right);
     set_motorB_speed(duty_left);
 
+    float timestamp = (float)(esp_timer_get_time() / 1.0e6);
+    log_data(timestamp, error, duty_left, duty_right, get_encoder_left(), get_encoder_right());
     
     last_error = error;
 }

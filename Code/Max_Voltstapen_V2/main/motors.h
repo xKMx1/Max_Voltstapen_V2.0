@@ -13,6 +13,4 @@ void set_motorB_direction(bool forward);
 void set_motorA_speed(float duty_cycle);
 void set_motorB_speed(float duty_cycle);
 
-
-
 #endif

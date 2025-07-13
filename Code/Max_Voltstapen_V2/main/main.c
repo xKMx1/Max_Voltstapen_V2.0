@@ -3,6 +3,8 @@
 #include "motors.h"
 #include "controller.h"
 #include "wifi_manager.h"
+#include "encoders.h"
+#include "logger.h"
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -10,6 +12,7 @@
 #include "esp_timer.h"
 #include "esp_event.h"
 #include "esp_log.h"
+#include "esp_netif.h"  // Dodane
 #include "nvs_flash.h"
 #include "wifi_manager.h"
 #include "esp_http_server.h"
@@ -23,11 +26,15 @@ const int BIN2 = 37;
 
 static const char *TAG = "main";
 
+// Jedna definicja zmiennej logging_enabled
+bool logging_enabled = false;
+
 const char* html_form = "<!DOCTYPE html><html><head><meta charset='utf-8'><title>PD Sterowanie</title>"
 "<style>"
 "body { font-family: sans-serif; margin: 30px; }"
 "label { display: block; margin-top: 15px; font-weight: bold; }"
 "input[type=range], input[type=number] { margin-right: 10px; }"
+"input[type=checkbox] { margin-right: 10px; }"
 "button { padding: 10px 20px; margin: 20px 10px 0 0; font-size: 16px; }"
 "</style></head><body>"
 
@@ -44,6 +51,10 @@ const char* html_form = "<!DOCTYPE html><html><head><meta charset='utf-8'><title
 "<label for='speed'>Speed:</label>"
 "<input type='range' id='speed' min='0' max='255' step='1' value='30'>"
 "<input type='number' id='speed_num' min='0' max='255' step='1' value='30'>"
+
+"<label for='logging'>"
+"<input type='checkbox' id='logging'> Włącz logowanie danych"
+"</label>"
 
 "<div>"
 "<button onclick='sendControl(1)'>Start</button>"
@@ -65,12 +76,11 @@ const char* html_form = "<!DOCTYPE html><html><head><meta charset='utf-8'><title
 "  params.append('kp', kp.value);"
 "  params.append('kd', kd.value);"
 "  params.append('speed', speed.value);"
+"  params.append('logging', logging.checked ? '1' : '0');"
 "  params.append('run', run);"
 "  fetch('/control?' + params.toString()).then(r => r.text()).then(console.log);"
 "}"
 "</script></body></html>";
-
-
 
 esp_err_t root_get_handler(httpd_req_t *req) {
     httpd_resp_send(req, html_form, HTTPD_RESP_USE_STRLEN);
@@ -78,8 +88,8 @@ esp_err_t root_get_handler(httpd_req_t *req) {
 }
 
 esp_err_t control_handler(httpd_req_t *req) {
-    char query[100];
-    char buf[200];
+    char query[150];  // Zwiększony rozmiar
+    char buf[250];
 
     if (httpd_req_get_url_query_str(req, query, sizeof(query)) == ESP_OK) {
         char param[16];
@@ -96,13 +106,19 @@ esp_err_t control_handler(httpd_req_t *req) {
             default_speed = atof(param);
         }
 
+        if (httpd_query_key_value(query, "logging", param, sizeof(param)) == ESP_OK) {
+            logging_enabled = (atoi(param) == 1);
+            enable_logger(logging_enabled);
+        }
+
         if (httpd_query_key_value(query, "run", param, sizeof(param)) == ESP_OK) {
             robot_running = atoi(param); // 1 = start, 0 = stop
         }
 
         snprintf(buf, sizeof(buf),
-            "Nowe wartosci:<br>kp: %.4f<br>kd: %.4f<br>speed: %.1f<br>running: %s",
-            kp, kd, default_speed, robot_running ? "true" : "false");
+            "Nowe wartosci:<br>kp: %.4f<br>kd: %.4f<br>speed: %.1f<br>logging: %s<br>running: %s",
+            kp, kd, default_speed, logging_enabled ? "enabled" : "disabled", 
+            robot_running ? "true" : "false");
 
         httpd_resp_send(req, buf, HTTPD_RESP_USE_STRLEN);
     } else {
@@ -111,7 +127,6 @@ esp_err_t control_handler(httpd_req_t *req) {
 
     return ESP_OK;
 }
-
 
 void start_webserver(void) {
     httpd_config_t config = HTTPD_DEFAULT_CONFIG();
@@ -145,39 +160,62 @@ void start_webserver(void) {
 }
 
 void wifi_task(void *pvParameter) {
-    ESP_ERROR_CHECK(nvs_flash_init());
-    wifi_init_softap();   // AP + Serwer WWW
-    start_webserver();    // Start serwera HTTP
+    // Zmień na station mode - łączenie z domową siecią
+    wifi_init_sta();      // Zamiast wifi_init_softap()
+    
+    // Sprawdź czy połączono
+    if (is_wifi_connected()) {
+        ESP_LOGI(TAG, "WiFi połączone, uruchamiam serwer HTTP...");
+        start_webserver();    // Start serwera HTTP
+    } else {
+        ESP_LOGE(TAG, "Nie udało się połączyć z WiFi!");
+    }
+    
     vTaskDelete(NULL);    // Kończy task po uruchomieniu serwera
 }
 
- 
 void app_main(void) {
     ESP_ERROR_CHECK(esp_task_wdt_add(NULL));
 
+    // Inicjalizacja podstawowych komponentów
+    ESP_ERROR_CHECK(nvs_flash_init());
+    ESP_ERROR_CHECK(esp_netif_init());
+    ESP_ERROR_CHECK(esp_event_loop_create_default());
+
+    // Inicjalizacja WiFi task (Access Point)
     xTaskCreate(&wifi_task, "wifi_task", 4096, NULL, 5, NULL);
 
+    // Inicjalizacja hardware
     init_gpio();
     init_pwm();
     initADC();
-    // init_wifi();
+    init_encoders();
+    start_encoder_monitoring();
+    
+    // Inicjalizacja loggera
+    if (init_logger() != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to initialize logger");
+    }
 
+    // Kalibracja czujników
     unsigned long currLoopT = 0;
     unsigned long prevLoopT = 0;
     float deltaLoopT = 0;
 
     int slowDown = 0;
-
     int sensorValues[8] = {0};
     float linePos = 0;
 
+    // Kalibracja
+    ESP_LOGI(TAG, "Starting sensor calibration...");
     for (uint16_t i = 0; i < 1000; i++) {
         calibrate(&calibration);
         esp_task_wdt_reset();
         vTaskDelay(pdMS_TO_TICKS(10));
     }
-    printf("Calibration done\n\n");
+    ESP_LOGI(TAG, "Calibration done");
 
+    // Główna pętla
     while (1) {
         currLoopT = esp_timer_get_time();
         deltaLoopT = ((float)(currLoopT - prevLoopT)) / 1.0e6;
@@ -197,5 +235,4 @@ void app_main(void) {
         esp_task_wdt_reset();
         vTaskDelay(pdMS_TO_TICKS(10));
     }
-
 }
